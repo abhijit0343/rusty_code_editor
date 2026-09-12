@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# User Code / Output
+workspace/
+__pycache__/
+*.pyc
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local

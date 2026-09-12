@@ -1,0 +1,12 @@
+{
+  "name": "code-editor-root",
+  "version": "1.0.0",
+  "description": "Root package for Rusty Editor to run both frontend and backend together.",
+  "scripts": {
+    "install-all": "npm install --prefix backend && npm install --prefix frontend",
+    "start": "concurrently \"npm start --prefix backend\" \"npm run dev --prefix frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

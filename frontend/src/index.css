@@ -1,0 +1,254 @@
+/* ─── Google Fonts ───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg:        #0f1117;
+  --surface:   #1a1d27;
+  --panel:     #13151e;
+  --border:    #2a2d3a;
+  --accent:    #6c8ef5;
+  --green:     #3ecf6e;
+  --red:       #f0504a;
+  --text:      #dde1f0;
+  --muted:     #5c6280;
+  --radius:    8px;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-ui:   'Inter', system-ui, sans-serif;
+  --ease:      0.15s ease;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── App shell ──────────────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  height: 50px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.header-logo { font-size: 20px; }
+
+.header-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.header-spacer { flex: 1; }
+
+/* Status indicator */
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 2s ease-in-out infinite;
+}
+.status-dot.offline { background: var(--red); animation: none; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ─── Toolbar ────────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.filename-input {
+  width: 170px;
+  height: 32px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 0 10px;
+  outline: none;
+  transition: border-color var(--ease);
+}
+.filename-input::placeholder { color: var(--muted); }
+.filename-input:focus { border-color: var(--accent); }
+
+.toolbar-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 2px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--ease), opacity var(--ease), transform var(--ease);
+  white-space: nowrap;
+  user-select: none;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+.btn-run {
+  background: var(--green);
+  color: #fff;
+}
+.btn-run:hover:not(:disabled) { background: #35c063; }
+
+.btn-save {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+}
+.btn-save:hover:not(:disabled) { background: var(--panel); border-color: var(--accent); }
+
+.btn-clear {
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+}
+.btn-clear:hover:not(:disabled) { color: var(--text); }
+
+/* Timeout selector */
+.timeout-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 4px;
+}
+.timeout-select {
+  height: 32px;
+  padding: 0 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--ease);
+}
+.timeout-select:focus { border-color: var(--accent); }
+
+/* Toast */
+.toast {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  animation: fadeUp 0.2s ease;
+  flex-shrink: 0;
+}
+.toast.success { background: rgba(62,207,110,.15); color: var(--green); border: 1px solid rgba(62,207,110,.3); }
+.toast.error   { background: rgba(240,80,74,.12);  color: var(--red);   border: 1px solid rgba(240,80,74,.3); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ─── Main split ─────────────────────────────────────────────── */
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Editor pane */
+.editor-pane {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  min-width: 0;
+}
+
+.pane-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.pane-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.editor-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ─── Output pane ────────────────────────────────────────────── */
+.output-pane {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 260px;
+  background: var(--bg);
+}
+
+/* xterm.js customisations */
+.xterm .xterm-viewport {
+  background-color: transparent !important;
+}
