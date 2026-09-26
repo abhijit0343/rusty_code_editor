@@ -85,9 +85,9 @@ This command uses `concurrently` to start both servers in a single terminal.
 | Server | URL |
 |---|---|
 | Node/Express backend | http://localhost:5000 |
-| Vite frontend | http://localhost:5173 |
+| Vite frontend | http://localhost:3000 |
 
-Open **http://localhost:5173** in your browser. Done! 🎉
+Open **http://localhost:3000** in your browser. Done!
 
 ---
 
