@@ -1,0 +1,37 @@
+====================================================
+RUSTY EDITOR - ARCHITECTURE & TECH STACK SUMMARY
+====================================================
+
+1. THE TECH STACK
+-----------------
+Frontend:
+- React (UI Framework)
+- Vite (Build Tool & Dev Server)
+- Monaco Editor (The code editor itself, same one used in VS Code)
+- xterm.js (The interactive terminal emulator)
+- socket.io-client (Real-time connection to backend)
+
+Backend:
+- Node.js & Express (Web server)
+- socket.io (Real-time WebSocket server)
+- child_process (Built-in Node library to run Python)
+
+Orchestration:
+- concurrently (NPM package to run both Frontend and Backend with a single command)
+
+2. HOW IT WORKS (THE FLOW)
+--------------------------
+Step 1: You write Python code in the Monaco Editor on the frontend.
+Step 2: You press "Run". The frontend sends the code to the backend over a WebSocket connection (socket.io).
+Step 3: The backend takes your code, saves it temporarily into a file (e.g., code.py), and uses `child_process.spawn()` to run: `python -u code.py`.
+Step 4: As Python runs, its output (stdout) and errors (stderr) are immediately streamed back to the frontend over the WebSocket.
+Step 5: The frontend receives this text and prints it into the xterm.js terminal.
+Step 6: If Python reaches an `input()` statement, it waits. When you type in the xterm terminal, your keystrokes are sent over the WebSocket back to the backend, which feeds them directly into Python's `stdin`.
+
+3. WHY THIS ARCHITECTURE?
+-------------------------
+- WebSockets: We use WebSockets instead of normal HTTP requests because HTTP is a one-time request/response. WebSockets allow for a continuous, live two-way connection. This is what makes the terminal "interactive" (pausing for input).
+- xterm.js: This gives us a real terminal feel (cursor blinking, backspace working, colors) rather than just a dumb text box.
+- Local Python: Because we spawn the Python process on your actual machine, your code has full access to any libraries you've installed (like numpy or pandas), rather than being restricted in a sandbox.
+
+====================================================
